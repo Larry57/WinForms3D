@@ -1,0 +1,9 @@
+﻿Misc. sources
+http://www.falloutsoftware.com/tutorials/gl/gl0.htm
+https://stackoverflow.com/questions/4124041/is-opengl-coordinate-system-left-handed-or-right-handed
+https://en.wikipedia.org/wiki/3D_projection
+https://docs.microsoft.com/fr-fr/dotnet/api/system.numerics.vector2?view=netframework-4.8
+https://paroj.github.io/gltut/Positioning/Tut05%20Boundaries%20and%20Clipping.html
+https://www.3dgep.com/understanding-the-view-matrix/
+http://gomezconsultants.com/CSE5280/Clipping/Clipping.html 
+http://medialab.di.unipi.it/web/IUM/Waterloo/html.html

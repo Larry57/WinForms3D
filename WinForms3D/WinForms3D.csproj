@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA416486-6809-4152-A2A4-791BA0D4E409}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WinForms3D</RootNamespace>
+    <AssemblyName>WinForms3D</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ArcBallCamControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ArcBallCamControl.Designer.cs">
+      <DependentUpon>ArcBallCamControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Camera\ArcBallCam.cs" />
+    <Compile Include="Controls\FlyCamHandler.cs" />
+    <Compile Include="Controls\ArcBallCamHandler.cs" />
+    <Compile Include="Clipping\IClipping2D.cs" />
+    <Compile Include="Clipping\IClippingHomogeneous.cs" />
+    <Compile Include="Clipping\LiangBarskyClipping2D.cs" />
+    <Compile Include="Clipping\LiangBarskyClippingHomogeneous.cs" />
+    <Compile Include="Controls\ControlHelper.cs" />
+    <Compile Include="Controls\PropertyChangedHelper.cs" />
+    <Compile Include="Controls\Slider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Slider.Designer.cs">
+      <DependentUpon>Slider.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SliderIn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SliderIn.Designer.cs">
+      <DependentUpon>SliderIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Clipping\CohenSutherlandClipping2D.cs" />
+    <Compile Include="Clipping\CohenSutherlandClippingHomogeneous.cs" />
+    <Compile Include="RenderContext.cs" />
+    <Compile Include="Painter\PaintedVertex.cs" />
+    <Compile Include="Painter\PainterUtils.cs" />
+    <Compile Include="Projection\FovPerspectiveProjection.cs" />
+    <Compile Include="Projection\InfinitePerspectiveProjection.cs" />
+    <Compile Include="Projection\IProjection.cs" />
+    <Compile Include="Painter\GouraudPainter.cs" />
+    <Compile Include="FrameBuffer.cs" />
+    <Compile Include="Camera\FlyCam.cs" />
+    <Compile Include="Painter\ClassicPainter.cs" />
+    <Compile Include="ColorRGB.cs" />
+    <Compile Include="Painter\FlatPainter.cs" />
+    <Compile Include="Painter\IPainter.cs" />
+    <Compile Include="Renderers\RendererSettings.cs" />
+    <Compile Include="Renderers\RenderUtils.cs" />
+    <Compile Include="Renderers\IRenderer.cs" />
+    <Compile Include="Renderers\SimpleRenderer.cs" />
+    <Compile Include="Renderers\ZSortRenderer.cs" />
+    <Compile Include="Stats.cs" />
+    <Compile Include="Utils\GeomUtils.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="Utils\MathUtils.cs" />
+    <Compile Include="Painter\WireFramePainter.cs" />
+    <Compile Include="Utils\MiscUtils.cs" />
+    <Compile Include="VertexBuffer.cs" />
+    <Compile Include="World\Face.cs" />
+    <Compile Include="World\Cube.cs" />
+    <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="World\IcoSphere.cs" />
+    <Compile Include="World\ILightSource.cs" />
+    <Compile Include="World\IVolume.cs" />
+    <Compile Include="IWorld.cs" />
+    <Compile Include="Panel3D.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panel3D.Designer.cs">
+      <DependentUpon>Panel3D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TriangleIndices.cs" />
+    <Compile Include="World\VolumeEx.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rotation3D.cs" />
+    <Compile Include="World\VolumeFactory.cs" />
+    <Compile Include="World.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ArcBallCamControl.resx">
+      <DependentUpon>ArcBallCamControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Slider.resx">
+      <DependentUpon>Slider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SliderIn.resx">
+      <DependentUpon>SliderIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panel3D.resx">
+      <DependentUpon>Panel3D.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="documentation.txt" />
+    <Compile Include="World\Volume.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Buffers">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
