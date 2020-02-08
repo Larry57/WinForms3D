@@ -54,6 +54,9 @@
       <DependentUpon>ArcBallCamControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Camera\ArcBallCam.cs" />
+    <Compile Include="Controls\DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FlyCamHandler.cs" />
     <Compile Include="Controls\ArcBallCamHandler.cs" />
     <Compile Include="Clipping\IClipping2D.cs" />
