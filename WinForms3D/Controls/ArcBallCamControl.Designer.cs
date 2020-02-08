@@ -1,4 +1,6 @@
-﻿namespace WinForms3D {
+﻿using System.Windows.Forms;
+
+namespace WinForms3D {
     partial class ArcBallCamControl {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -23,14 +25,14 @@
         /// le contenu de cette méthode avec l'éditeur de code.
         /// </summary>
         private void InitializeComponent() {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new DoubleBufferedPanel();
             this.slider1 = new WinForms3D.SliderIn();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel1.Location = new System.Drawing.Point(3, 3);
@@ -40,7 +42,7 @@
             // 
             // slider1
             // 
-            this.slider1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.slider1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.slider1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.slider1.Location = new System.Drawing.Point(228, 3);
@@ -63,6 +65,7 @@
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.Controls.Add(this.slider1);
             this.Controls.Add(this.panel1);
+            this.DoubleBuffered = true;
             this.Name = "ArcBallCamControl";
             this.Size = new System.Drawing.Size(251, 228);
             this.ResumeLayout(false);
@@ -70,7 +73,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel1;
+        private Panel panel1;
         private SliderIn slider1;
     }
 }

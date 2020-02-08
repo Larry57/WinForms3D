@@ -64,7 +64,6 @@ namespace WinForms3D {
             oldMousePosition = e.Location;
 
             if(left && right) {
-                // oldCameraRotation = camera.Rotation;
                 oldCameraPosition = camera.Position;
                 control.Cursor = Cursors.SizeNS ;
             }
