@@ -49,7 +49,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rdbSimpleRendererLogic = new System.Windows.Forms.RadioButton();
-            this.rdbZSortRendererLogic = new System.Windows.Forms.RadioButton();
             this.btnBench = new System.Windows.Forms.Button();
             this.lblSw = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -122,9 +121,9 @@
             this.groupBox1.Controls.Add(this.rdbGouraudShading);
             this.groupBox1.Controls.Add(this.rdbClassicShading);
             this.groupBox1.Controls.Add(this.rdbFlatShading);
-            this.groupBox1.Location = new System.Drawing.Point(918, 279);
+            this.groupBox1.Location = new System.Drawing.Point(918, 286);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(135, 133);
+            this.groupBox1.Size = new System.Drawing.Size(135, 126);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Shading";
@@ -151,7 +150,7 @@
             this.groupBox2.Controls.Add(this.chkShowVerticesNormals);
             this.groupBox2.Location = new System.Drawing.Point(918, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(135, 158);
+            this.groupBox2.Size = new System.Drawing.Size(135, 201);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Display";
@@ -332,10 +331,9 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.rdbSimpleRendererLogic);
-            this.groupBox3.Controls.Add(this.rdbZSortRendererLogic);
-            this.groupBox3.Location = new System.Drawing.Point(918, 188);
+            this.groupBox3.Location = new System.Drawing.Point(918, 231);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(135, 85);
+            this.groupBox3.Size = new System.Drawing.Size(135, 49);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Renderer logic";
@@ -350,17 +348,6 @@
             this.rdbSimpleRendererLogic.TabStop = true;
             this.rdbSimpleRendererLogic.Text = "Simple";
             this.rdbSimpleRendererLogic.UseVisualStyleBackColor = true;
-            // 
-            // rdbZSortRendererLogic
-            // 
-            this.rdbZSortRendererLogic.AutoSize = true;
-            this.rdbZSortRendererLogic.Location = new System.Drawing.Point(15, 42);
-            this.rdbZSortRendererLogic.Name = "rdbZSortRendererLogic";
-            this.rdbZSortRendererLogic.Size = new System.Drawing.Size(52, 17);
-            this.rdbZSortRendererLogic.TabIndex = 0;
-            this.rdbZSortRendererLogic.TabStop = true;
-            this.rdbZSortRendererLogic.Text = "Z sort";
-            this.rdbZSortRendererLogic.UseVisualStyleBackColor = true;
             // 
             // btnBench
             // 
@@ -441,7 +428,6 @@
         private System.Windows.Forms.CheckBox chkShowXZGrid;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton rdbSimpleRendererLogic;
-        private System.Windows.Forms.RadioButton rdbZSortRendererLogic;
         private System.Windows.Forms.CheckBox chkShowAxes;
         private System.Windows.Forms.Button btnBench;
         private System.Windows.Forms.Label lblSw;

@@ -8,7 +8,7 @@ namespace WinForms3D {
         Vector3 Scale { get; }
         
         ColorRGB[] TriangleColors { get; }
-        TriangleIndices[] TriangleIndices { get; }
+        Triangle[] Triangles { get; }
         Vector3[] Vertices { get; }
         Vector3[] NormVertices { get; }
 

@@ -11,13 +11,13 @@ namespace WinForms3D {
 
         IClippingHomogeneous clipperH = new LiangBarskyClippingHomogeneous();
 
-        public void DrawTriangle(ColorRGB color, VertexBuffer vbx, IVolume v, int triangleIndice) {
+        public void DrawTriangle(ColorRGB color, VertexBuffer vbx, int triangleIndice) {
             var surface = RendererContext.Surface;
-            var t = v.TriangleIndices[triangleIndice];
+            var t = vbx.Volume.Triangles[triangleIndice];
 
-            var projectionP0 = vbx.ProjectionVertices[t.I1];
-            var projectionP1 = vbx.ProjectionVertices[t.I2];
-            var projectionP2 = vbx.ProjectionVertices[t.I3];
+            var projectionP0 = vbx.ProjectionVertices[t.I0];
+            var projectionP1 = vbx.ProjectionVertices[t.I1];
+            var projectionP2 = vbx.ProjectionVertices[t.I2];
 
             var l0p0 = projectionP0; var l0p1 = projectionP1;
             var l1p0 = projectionP1; var l1p1 = projectionP2;

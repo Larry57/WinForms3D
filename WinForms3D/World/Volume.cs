@@ -9,13 +9,13 @@ using System.Xml.Linq;
 
 namespace WinForms3D {
     public class Volume : IVolume {
-        public Volume(Vector3[] vertices, TriangleIndices[] triangleIndices, Vector3[] vertexNormals = null, ColorRGB[] triangleColors = null) {
+        public Volume(Vector3[] vertices, Triangle[] triangleIndices, Vector3[] vertexNormals = null, ColorRGB[] triangleColors = null) {
             Vertices = vertices;
-            TriangleIndices = triangleIndices;
+            Triangles = triangleIndices;
 
             // TriangleNormals = triangleNormals ?? this.CalculateTriangleNormals().ToArray();
             NormVertices = vertexNormals ?? this.CalculateVertexNormals().ToArray();
-            TriangleColors = triangleColors ?? Enumerable.Repeat(ColorRGB.Gray, TriangleIndices.Length).ToArray();
+            TriangleColors = triangleColors ?? Enumerable.Repeat(ColorRGB.Gray, Triangles.Length).ToArray();
 
             Scale = Vector3.One;
         }
@@ -24,7 +24,7 @@ namespace WinForms3D {
 
         public ColorRGB[] TriangleColors { get; }
 
-        public TriangleIndices[] TriangleIndices { get; }
+        public Triangle[] Triangles { get; }
 
         public Vector3 Centroid { get; }
 

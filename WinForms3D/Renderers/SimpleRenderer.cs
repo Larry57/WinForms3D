@@ -1,4 +1,5 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace WinForms3D {
@@ -41,86 +42,67 @@ namespace WinForms3D {
 
             var viewMatrix = camera.ViewMatrix();
             var projectionMatrix = projection.ProjectionMatrix(surface.Width, surface.Height);
-
             var world2Projection = viewMatrix * projectionMatrix;
 
-            var volumes = world.Volumes;
-            var vc = volumes.Count;
-
+            // Allocate arrays to store transformed vertices
             using var worldBuffer = new WorldBuffer(world);
-
             renderContext.WorldBuffer = worldBuffer;
 
-            for(var iv = 0; iv < vc; iv++) {
-                var volume = volumes[iv];
+            var volumes = world.Volumes;
+            var volumeCount = volumes.Count;
+            for(var idxVolume = 0; idxVolume < volumeCount; idxVolume++) {
+
+                var vbx = worldBuffer.VertexBuffer[idxVolume];
+                var volume = volumes[idxVolume];
 
                 var worldMatrix = volume.WorldMatrix();
-                var model2View = worldMatrix * viewMatrix;
+                var modelViewMatrix = worldMatrix * viewMatrix;
 
-                // Transform volume vertices from model xyz to view xyz
+                vbx.Volume = volume;
+                vbx.WorldMatrix = worldMatrix;
 
-                var nv = volume.Vertices.Length;
-                var vbx = worldBuffer.VertexBuffers[iv];
+                stats.TotalTriangleCount += volume.Triangles.Length;
 
-                for(var i = 0; i < nv; i++) {
-                    vbx.ViewVertices[i] = Vector3.Transform(volume.Vertices[i], model2View);
+                var vertices = volume.Vertices;
+                var viewVertices = vbx.ViewVertices;
+
+                // Transform and store vertices to View
+                var vertexCount = vertices.Length;
+                for(var idxVertex = 0; idxVertex < vertexCount; idxVertex++) {
+                    viewVertices[idxVertex] = Vector3.Transform(vertices[idxVertex], modelViewMatrix);
                 }
 
-                stats.TotalTriangleCount += volume.TriangleIndices.Length;
+                var triangleCount = volume.Triangles.Length;
+                for(var idxTriangle = 0; idxTriangle < triangleCount; idxTriangle++) {
+                    var t = volume.Triangles[idxTriangle];
 
-                var nt = volume.TriangleIndices.Length;
-                for(var triangleIndice = 0; triangleIndice < nt; triangleIndice++) {
-                    var t = volume.TriangleIndices[triangleIndice];
-
-                    // var viewP1 = vbx.ViewVertices[t.I1];
-                    // var viewP2 = vbx.ViewVertices[t.I2];
-                    // var viewP3 = vbx.ViewVertices[t.I3];
-
-                    // if(RenderUtils.isTriangleBehindFarPlane(viewP1, viewP2, viewP3)) {
-                    if(t.IsBehindFarPlane(vbx.ViewVertices)) {
+                    // Discard if behind far plane
+                    if(t.IsBehindFarPlane(vbx)) {
                         stats.BehindViewTriangleCount++;
                         continue;
                     }
 
-                    // Discard back facing triangle
-
-                    // if(rendererSettings.BackFaceCulling && RenderUtils.isTriangleFacingBack(viewP1, viewP2, viewP3)) {
-                    if(rendererSettings.BackFaceCulling && t.IsFacingBack(vbx.ViewVertices)) {
+                    // Discard if back facing 
+                    if(rendererSettings.BackFaceCulling && t.IsFacingBack(vbx)) {
                         stats.FacingBackTriangleCount++;
                         continue;
                     }
 
-                    // Project visible vertices
+                    // Project in frustum
+                    t.TransformProjection(vbx, projectionMatrix);
 
-                    foreach(var j in new[] { t.I1, t.I2, t.I3 }) {
-                        if(vbx.ProjectionVertices[j] == Vector4.Zero)
-                            vbx.ProjectionVertices[j] = Vector4.Transform(vbx.ViewVertices[j], projectionMatrix);
-                    }
-
-                    // var projectionP1 = vbx.ProjectionVertices[t.I1];
-                    // var projectionP2 = vbx.ProjectionVertices[t.I2];
-                    // var projectionP3 = vbx.ProjectionVertices[t.I3];
-
-                    // if(RenderUtils.isTriangleOutsideFrustum(projectionP1, projectionP2, projectionP3)) {
-                    if(t.isOutsideFrustum(vbx.ProjectionVertices)) {
-                    stats.OutOfViewTriangleCount++;
+                    // Discard if outside view frustum
+                    if(t.isOutsideFrustum(vbx)) {
+                        stats.OutOfViewTriangleCount++;
                         continue;
-                    }
-
-                    foreach(var j in new[] { t.I1, t.I2, t.I3 }) {
-                        if(vbx.WorldNormVertices[j] == Vector3.Zero)
-                            vbx.WorldNormVertices[j] = Vector3.TransformNormal(volume.NormVertices[j], worldMatrix);
-
-                        if(vbx.WorldVertices[j] == Vector3.Zero)
-                            vbx.WorldVertices[j] = Vector3.Transform(volume.Vertices[j], worldMatrix);
                     }
 
                     stats.PaintTime();
 
-                    var color = volume.TriangleColors[triangleIndice];
+                    var color = volume.TriangleColors[idxTriangle];
 
                     if(rendererSettings.ShowTriangles)
-                        wireFramePainter.DrawTriangle(ColorRGB.Magenta, vbx, volume, triangleIndice);
+                        wireFramePainter.DrawTriangle(ColorRGB.Magenta, vbx, idxTriangle);
 
                     if(rendererSettings.ShowTriangleNormals) {
                         var worldCentroid = t.CalculateCentroid(vbx.WorldVertices);
@@ -131,16 +113,13 @@ namespace WinForms3D {
                         wireFramePainter.DrawLine(surface, ColorRGB.Red, startPoint, endPoint);
                     }
 
-                    Painter?.DrawTriangle(color, vbx, volume, triangleIndice);
+                    Painter?.DrawTriangle(color, vbx, idxTriangle);
 
                     stats.DrawnTriangleCount++;
 
                     stats.CalcTime();
                 }
             }
-
-            // drawLine(world2Projection, new Vector3(-20, 0, 0), new Vector3(20, 0, 0), Color4.Red);
-            // drawAxes(world2Projection);
 
             if(rendererSettings.ShowXZGrid)
                 RenderUtils.drawGrid(surface, wireFramePainter, world2Projection, -10, 10);

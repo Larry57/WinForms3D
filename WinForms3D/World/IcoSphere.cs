@@ -51,7 +51,7 @@ namespace WinForms3D {
 
             Dictionary<long, int> middlePointIndexCache;
             public List<Vector3> points { get;  } = new List<Vector3>();
-            public List<TriangleIndices> faces { get; private set; } = new List<TriangleIndices>();
+            public List<Triangle> faces { get; private set; } = new List<Triangle>();
 
             int addVertex(Vector3 p) {
                 points.Add(Vector3.Normalize(p));
@@ -82,50 +82,50 @@ namespace WinForms3D {
 
 
                 // create 20 triangles of the icosahedron
-                faces = new List<TriangleIndices>();
+                faces = new List<Triangle>();
                 
                 // 5 faces around point 0
-                faces.Add(new TriangleIndices(0, 11, 5));
-                faces.Add(new TriangleIndices(0, 5, 1));
-                faces.Add(new TriangleIndices(0, 1, 7));
-                faces.Add(new TriangleIndices(0, 7, 10));
-                faces.Add(new TriangleIndices(0, 10, 11));
+                faces.Add(new Triangle(0, 11, 5));
+                faces.Add(new Triangle(0, 5, 1));
+                faces.Add(new Triangle(0, 1, 7));
+                faces.Add(new Triangle(0, 7, 10));
+                faces.Add(new Triangle(0, 10, 11));
 
                 // 5 adjacent faces 
-                faces.Add(new TriangleIndices(1, 5, 9));
-                faces.Add(new TriangleIndices(5, 11, 4));
-                faces.Add(new TriangleIndices(11, 10, 2));
-                faces.Add(new TriangleIndices(10, 7, 6));
-                faces.Add(new TriangleIndices(7, 1, 8));
+                faces.Add(new Triangle(1, 5, 9));
+                faces.Add(new Triangle(5, 11, 4));
+                faces.Add(new Triangle(11, 10, 2));
+                faces.Add(new Triangle(10, 7, 6));
+                faces.Add(new Triangle(7, 1, 8));
 
                 // 5 faces around point 3
-                faces.Add(new TriangleIndices(3, 9, 4));
-                faces.Add(new TriangleIndices(3, 4, 2));
-                faces.Add(new TriangleIndices(3, 2, 6));
-                faces.Add(new TriangleIndices(3, 6, 8));
-                faces.Add(new TriangleIndices(3, 8, 9));
+                faces.Add(new Triangle(3, 9, 4));
+                faces.Add(new Triangle(3, 4, 2));
+                faces.Add(new Triangle(3, 2, 6));
+                faces.Add(new Triangle(3, 6, 8));
+                faces.Add(new Triangle(3, 8, 9));
 
                 // 5 adjacent faces 
-                faces.Add(new TriangleIndices(4, 9, 5));
-                faces.Add(new TriangleIndices(2, 4, 11));
-                faces.Add(new TriangleIndices(6, 2, 10));
-                faces.Add(new TriangleIndices(8, 6, 7));
-                faces.Add(new TriangleIndices(9, 8, 1));
+                faces.Add(new Triangle(4, 9, 5));
+                faces.Add(new Triangle(2, 4, 11));
+                faces.Add(new Triangle(6, 2, 10));
+                faces.Add(new Triangle(8, 6, 7));
+                faces.Add(new Triangle(9, 8, 1));
 
 
                 // refine triangles
                 for(var r = 0; r < recursionLevel; r++) {
-                    var faces2 = new List<TriangleIndices>();
+                    var faces2 = new List<Triangle>();
                     foreach(var tri in faces) {
                         // replace triangle by 4 triangles
-                        var a = getMiddlePoint(tri.I1, tri.I2);
-                        var b = getMiddlePoint(tri.I2, tri.I3);
-                        var c = getMiddlePoint(tri.I3, tri.I1);
+                        var a = getMiddlePoint(tri.I0, tri.I1);
+                        var b = getMiddlePoint(tri.I1, tri.I2);
+                        var c = getMiddlePoint(tri.I2, tri.I0);
 
-                        faces2.Add(new TriangleIndices(tri.I1, a, c));
-                        faces2.Add(new TriangleIndices(tri.I2, b, a));
-                        faces2.Add(new TriangleIndices(tri.I3, c, b));
-                        faces2.Add(new TriangleIndices(a, b, c));
+                        faces2.Add(new Triangle(tri.I0, a, c));
+                        faces2.Add(new Triangle(tri.I1, b, a));
+                        faces2.Add(new Triangle(tri.I2, c, b));
+                        faces2.Add(new Triangle(a, b, c));
                     }
 
                     faces = faces2;

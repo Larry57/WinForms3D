@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 namespace WinForms3D {
     class PainterUtils {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SortTrianglePoints(VertexBuffer vbx, FrameBuffer frameBuffer, IVolume v, int triangleIndices, out PaintedVertex v0, out PaintedVertex v1, out PaintedVertex v2) {
-            var t = v.TriangleIndices[triangleIndices];
+        public static void SortTrianglePoints(VertexBuffer vbx, FrameBuffer frameBuffer, int triangleIndices, out PaintedVertex v0, out PaintedVertex v1, out PaintedVertex v2) {
+            var t = vbx.Volume.Triangles[triangleIndices];
 
-            v0 = new PaintedVertex(vbx.WorldNormVertices[t.I1], frameBuffer.ToScreen3(vbx.ProjectionVertices[t.I1]), vbx.WorldVertices[t.I1]);
-            v1 = new PaintedVertex(vbx.WorldNormVertices[t.I2], frameBuffer.ToScreen3(vbx.ProjectionVertices[t.I2]), vbx.WorldVertices[t.I2]);
-            v2 = new PaintedVertex(vbx.WorldNormVertices[t.I3], frameBuffer.ToScreen3(vbx.ProjectionVertices[t.I3]), vbx.WorldVertices[t.I3]);
+            var worldNormVertices = vbx.WorldNormVertices;
+            var projectionVertices = vbx.ProjectionVertices;
+            var worldVertices = vbx.WorldVertices;
+
+            v0 = new PaintedVertex(worldNormVertices[t.I0], frameBuffer.ToScreen3(projectionVertices[t.I0]), worldVertices[t.I0]);
+            v1 = new PaintedVertex(worldNormVertices[t.I1], frameBuffer.ToScreen3(projectionVertices[t.I1]), worldVertices[t.I1]);
+            v2 = new PaintedVertex(worldNormVertices[t.I2], frameBuffer.ToScreen3(projectionVertices[t.I2]), worldVertices[t.I2]);
 
             if(v0.ScreenPoint.Y > v1.ScreenPoint.Y) MiscUtils.Swap(ref v0, ref v1);
             if(v1.ScreenPoint.Y > v2.ScreenPoint.Y) MiscUtils.Swap(ref v1, ref v2);

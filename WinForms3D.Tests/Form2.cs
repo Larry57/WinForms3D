@@ -49,10 +49,8 @@ namespace WinForms3D.Tests {
             rdbGouraudShading.CheckedChanged += (s, e) => { if(!((RadioButton)s).Checked) return; panel3D1.Painter = new GouraudPainter(); panel3D1.Invalidate(); };
 
             rdbSimpleRendererLogic.Checked = panel3D1.Renderer is SimpleRenderer;
-            rdbZSortRendererLogic.Checked = panel3D1.Renderer is ZSortRenderer;
 
             rdbSimpleRendererLogic.CheckedChanged += (s, e) => { if(!((RadioButton)s).Checked) return; panel3D1.Renderer = new SimpleRenderer(); panel3D1.Invalidate(); };
-            rdbZSortRendererLogic.CheckedChanged += (s, e) => { if(!((RadioButton)s).Checked) return; panel3D1.Renderer = new ZSortRenderer(); panel3D1.Invalidate(); };
 
             chkShowTriangles.Checked = panel3D1.RendererSettings.ShowTriangles;
             chkShowBackFacesCulling.Checked = panel3D1.RendererSettings.BackFaceCulling;

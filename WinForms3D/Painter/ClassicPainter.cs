@@ -8,13 +8,11 @@ namespace WinForms3D {
         public RenderContext RendererContext { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawTriangle(ColorRGB color, VertexBuffer vbx, IVolume v, int triangleIndice) {
+        public void DrawTriangle(ColorRGB color, VertexBuffer vbx, int triangleIndice) {
             var surface = RendererContext.Surface;
-            PainterUtils.SortTrianglePoints(vbx, surface, v, triangleIndice, out var v0, out var v1, out var v2);
+            PainterUtils.SortTrianglePoints(vbx, surface, triangleIndice, out var v0, out var v1, out var v2);
 
-            var p0 = v0.ScreenPoint;
-            var p1 = v1.ScreenPoint;
-            var p2 = v2.ScreenPoint;
+            var p0 = v0.ScreenPoint; var p1 = v1.ScreenPoint; var p2 = v2.ScreenPoint;
 
             var yStart = (int)Math.Max(p0.Y, 0);
             var yEnd = (int)Math.Min(p2.Y, surface.Height - 1);

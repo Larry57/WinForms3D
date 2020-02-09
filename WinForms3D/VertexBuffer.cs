@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace WinForms3D {
@@ -7,23 +8,27 @@ namespace WinForms3D {
     public class WorldBuffer : IDisposable {
         private static ArrayPool<VertexBuffer> vertexBuffer3bag = ArrayPool<VertexBuffer>.Shared;
 
-        public VertexBuffer[] VertexBuffers { get; }
+        public VertexBuffer[] VertexBuffer { get; }
+        int size { get; }
 
         public WorldBuffer(IWorld w) {
-            var nv = w.Volumes.Count;
-            VertexBuffers = vertexBuffer3bag.Rent(w.Volumes.Count);
+            var volumes = w.Volumes;
+            size = volumes.Count;
 
-            for(var i = 0; i < nv; i++) {
-                VertexBuffers[i] = new VertexBuffer(w.Volumes[i].Vertices.Length);
+            VertexBuffer = vertexBuffer3bag.Rent(size);
+
+            for(var i = 0; i < size; i++) {
+                VertexBuffer[i] = new VertexBuffer(volumes[i].Vertices.Length);
             }
         }
 
         public void Dispose() {
-            var nv = VertexBuffers.Length;
+            var nv = VertexBuffer.Length;
             for(var i = 0; i < nv; i++) {
-                VertexBuffers[i]?.Dispose();
+                VertexBuffer[i]?.Dispose();
             }
-            vertexBuffer3bag.Return(VertexBuffers, true);
+            Array.Clear(VertexBuffer, 0, size);
+            vertexBuffer3bag.Return(VertexBuffer, false);
         }
     }
 
@@ -31,15 +36,18 @@ namespace WinForms3D {
         private static ArrayPool<Vector3> vector3bag = ArrayPool<Vector3>.Shared;
         private static ArrayPool<Vector4> vector4bag = ArrayPool<Vector4>.Shared;
 
-        public Vector3[] ViewVertices;
-        public Vector3[] WorldVertices;
-        public Vector3[] WorldNormVertices;
-        public Vector4[] ProjectionVertices;
-        public Matrix4x4 WorldMatrix;
-        public Matrix4x4 Model2ViewMatrix;
-        public float Z;
+        public IVolume Volume { get; set; }             // Volumes
+        public Vector3[] ViewVertices { get; }          // Vertices in view
+        public Vector3[] WorldVertices { get; }         // Vertices in world
+        public Vector3[] WorldNormVertices { get; }     // Vertices normals in world
+        public Vector4[] ProjectionVertices { get; }    // Vertices in frustum
+
+        int size { get; }
+
+        public Matrix4x4 WorldMatrix { get; set; }
 
         public VertexBuffer(int vertexCount) {
+            this.size = vertexCount;
             ViewVertices = vector3bag.Rent(vertexCount);
             WorldVertices = vector3bag.Rent(vertexCount);
             WorldNormVertices = vector3bag.Rent(vertexCount);
@@ -47,10 +55,15 @@ namespace WinForms3D {
         }
 
         public void Dispose() {
-            vector3bag.Return(ViewVertices, true);
-            vector3bag.Return(WorldVertices, true);
-            vector3bag.Return(WorldNormVertices, true);
-            vector4bag.Return(ProjectionVertices, true);
+            Array.Clear(ViewVertices, 0, size);
+            Array.Clear(WorldVertices, 0, size);
+            Array.Clear(WorldNormVertices, 0, size);
+            Array.Clear(ProjectionVertices, 0, size);
+
+            vector3bag.Return(ViewVertices, false);
+            vector3bag.Return(WorldVertices, false);
+            vector3bag.Return(WorldNormVertices, false);
+            vector4bag.Return(ProjectionVertices, false);
         }
     }
 }

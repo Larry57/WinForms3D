@@ -96,7 +96,6 @@
     <Compile Include="Renderers\RenderUtils.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
     <Compile Include="Renderers\SimpleRenderer.cs" />
-    <Compile Include="Renderers\ZSortRenderer.cs" />
     <Compile Include="Stats.cs" />
     <Compile Include="Utils\GeomUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
@@ -117,7 +116,7 @@
     <Compile Include="Panel3D.Designer.cs">
       <DependentUpon>Panel3D.cs</DependentUpon>
     </Compile>
-    <Compile Include="TriangleIndices.cs" />
+    <Compile Include="Triangle.cs" />
     <Compile Include="World\VolumeEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rotation3D.cs" />

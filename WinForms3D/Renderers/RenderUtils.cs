@@ -7,42 +7,6 @@ namespace WinForms3D {
 
     public class RenderUtils {
 
-        public static bool isTriangleFacingBack(Vector3 p1, Vector3 p2, Vector3 p3) {
-            var vCentroid = Vector3.Normalize((p1 + p2 + p3) / 3);
-            var vNormal = Vector3.Normalize(Vector3.Cross(p2 - p1, p3 - p1));
-            return Vector3.Dot(vCentroid, vNormal) >= 0;
-        }
-
-        public static bool isTriangleBehindFarPlane(Vector3 viewP1, Vector3 viewP2, Vector3 viewP3) {
-            return viewP1.Z > 0 && viewP2.Z > 0 && viewP3.Z > 0;
-        }
-
-        public static bool isTriangleOutsideFrustum(Vector4 projectionP1, Vector4 projectionP2, Vector4 projectionP3) {
-            if(projectionP1.W < 0 || projectionP2.W < 0 || projectionP3.W < 0)
-                return true;
-
-            if(projectionP1.X < -projectionP1.W && projectionP2.X < -projectionP2.W && projectionP3.X < -projectionP3.W)
-                return true;
-
-            if(projectionP1.X > projectionP1.W && projectionP2.X > projectionP2.W && projectionP3.X > projectionP3.W)
-                return true;
-
-            if(projectionP1.Y < -projectionP1.W && projectionP2.Y < -projectionP2.W && projectionP3.Y < -projectionP3.W)
-                return true;
-
-            if(projectionP1.Y > projectionP1.W && projectionP2.Y > projectionP2.W && projectionP3.Y > projectionP3.W)
-                return true;
-
-            if(projectionP1.Z > projectionP1.W && projectionP2.Z > projectionP2.W && projectionP3.Z > projectionP3.W)
-                return true;
-
-            // This last one is normally not necessary when a IsTriangleBehind check is done
-            if(projectionP1.Z < 0 && projectionP2.Z < 0 && projectionP3.Z < 0)
-                return true;
-
-            return false;
-        }
-
         public static void drawGrid(FrameBuffer surface, WireFramePainter wireFramePainter, Matrix4x4 world2Projection, float from, float to) {
             for(var xz = from; xz <= to; xz++) {
                 drawLine(surface, wireFramePainter, world2Projection, new Vector3(xz, 0, from), new Vector3(xz, 0, to), xz == 0 ? ColorRGB.Red : ColorRGB.Green);
