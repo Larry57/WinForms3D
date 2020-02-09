@@ -72,18 +72,20 @@ namespace WinForms3D {
                 for(var triangleIndice = 0; triangleIndice < nt; triangleIndice++) {
                     var t = volume.TriangleIndices[triangleIndice];
 
-                    var viewP1 = vbx.ViewVertices[t.I1];
-                    var viewP2 = vbx.ViewVertices[t.I2];
-                    var viewP3 = vbx.ViewVertices[t.I3];
+                    // var viewP1 = vbx.ViewVertices[t.I1];
+                    // var viewP2 = vbx.ViewVertices[t.I2];
+                    // var viewP3 = vbx.ViewVertices[t.I3];
 
-                    if(RenderUtils.isTriangleBehindFarPlane(viewP1, viewP2, viewP3)) {
+                    // if(RenderUtils.isTriangleBehindFarPlane(viewP1, viewP2, viewP3)) {
+                    if(t.IsBehindFarPlane(vbx.ViewVertices)) {
                         stats.BehindViewTriangleCount++;
                         continue;
                     }
 
                     // Discard back facing triangle
 
-                    if(rendererSettings.BackFaceCulling && RenderUtils.isTriangleFacingBack(viewP1, viewP2, viewP3)) {
+                    // if(rendererSettings.BackFaceCulling && RenderUtils.isTriangleFacingBack(viewP1, viewP2, viewP3)) {
+                    if(rendererSettings.BackFaceCulling && t.IsFacingBack(vbx.ViewVertices)) {
                         stats.FacingBackTriangleCount++;
                         continue;
                     }
@@ -95,12 +97,13 @@ namespace WinForms3D {
                             vbx.ProjectionVertices[j] = Vector4.Transform(vbx.ViewVertices[j], projectionMatrix);
                     }
 
-                    var projectionP1 = vbx.ProjectionVertices[t.I1];
-                    var projectionP2 = vbx.ProjectionVertices[t.I2];
-                    var projectionP3 = vbx.ProjectionVertices[t.I3];
+                    // var projectionP1 = vbx.ProjectionVertices[t.I1];
+                    // var projectionP2 = vbx.ProjectionVertices[t.I2];
+                    // var projectionP3 = vbx.ProjectionVertices[t.I3];
 
-                    if(RenderUtils.isTriangleOutsideFrustum(projectionP1, projectionP2, projectionP3)) {
-                        stats.OutOfViewTriangleCount++;
+                    // if(RenderUtils.isTriangleOutsideFrustum(projectionP1, projectionP2, projectionP3)) {
+                    if(t.isOutsideFrustum(vbx.ProjectionVertices)) {
+                    stats.OutOfViewTriangleCount++;
                         continue;
                     }
 

@@ -70,7 +70,7 @@ namespace WinForms3D.Tests {
                 var sw = Stopwatch.StartNew();
                 arcBallCam.Position = new Vector3(0, 0, -5);
                 arcBallCam.Rotation = Quaternion.Identity;
-                for(var i = 0; i < 100; i++) {
+                for(var i = 0; i < 10; i++) {
                     arcBallCam.Rotation *= Quaternion.CreateFromYawPitchRoll(.1f, .1f, .1f);
                     this.panel3D1.Render();
                 }
