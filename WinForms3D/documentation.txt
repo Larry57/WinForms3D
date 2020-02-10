@@ -1,4 +1,6 @@
 ﻿Misc. sources
+http://www.songho.ca/opengl/index.html
+https://www.davrous.com/2013/06/13/tutorial-series-learning-how-to-write-a-3d-soft-engine-from-scratch-in-c-typescript-or-javascript/
 http://www.falloutsoftware.com/tutorials/gl/gl0.htm
 https://stackoverflow.com/questions/4124041/is-opengl-coordinate-system-left-handed-or-right-handed
 https://en.wikipedia.org/wiki/3D_projection

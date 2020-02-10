@@ -24,6 +24,7 @@ namespace WinForms3D {
 
             var yMiddle = MathUtils.Clamp((int)p1.Y, yStart, yEnd);
 
+            // This has to move elsewhere
             var lightPos = new Vector3(0, 10, 10);
 
             // computing the cos of the angle between the light vector and the normal vector
