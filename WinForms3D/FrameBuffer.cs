@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Numerics;
-using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace WinForms3D {
 

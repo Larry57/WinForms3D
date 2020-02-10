@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Numerics;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 
 namespace WinForms3D {
     public partial class Panel3D : UserControl {

@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace WinForms3D {
+﻿namespace WinForms3D {
 
     public class RenderContext {
         public ICamera Camera { get; set; }
