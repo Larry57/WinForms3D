@@ -7,7 +7,6 @@ namespace WinForms3D {
             Vertices = vertices;
             Triangles = triangleIndices;
 
-            // TriangleNormals = triangleNormals ?? this.CalculateTriangleNormals().ToArray();
             NormVertices = vertexNormals ?? this.CalculateVertexNormals().ToArray();
             TriangleColors = triangleColors ?? Enumerable.Repeat(ColorRGB.Gray, Triangles.Length).ToArray();
 

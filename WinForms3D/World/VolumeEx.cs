@@ -17,6 +17,8 @@ namespace WinForms3D {
 
         public static Vector3 CalculateVertexNormal(this Vector3 vertex, IVolume volume) {
             var inTriangles = GetTriangleIndexesHaving(vertex, volume);
+            if(!inTriangles.Any())
+                return Vector3.Zero;
             var sum = inTriangles.Select(idx => volume.Triangles[idx].CalculateNormal(volume.Vertices)).Distinct().Aggregate((v1, v2) => v1 + v2);
             return Vector3.Normalize(sum);
         }

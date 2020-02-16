@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Forms;
 
@@ -13,9 +14,11 @@ namespace WinForms3D.Tests {
         public Form2() {
             InitializeComponent();
 
+            // var v = VolumeFactory.NewImportCollada("Models\\skull.dae").ToList();
+
             lstDemos.DataSource = new[] {
                 new { display = "Crane", id = "skull" },
-                // new { display = "Teapot", id = "teapot" },
+                new { display = "Teapot", id = "teapot" },
                 new { display = "Cubes", id = "cubes" },
                 new { display = "Spheres", id = "spheres" },
                 new { display = "Little town", id = "littletown" },
@@ -84,18 +87,25 @@ namespace WinForms3D.Tests {
 
             this.panel3D2.Projection = projection;
             this.panel3D2.Camera = flyCam;
+
+            prepareWorld("skull");
         }
 
         private void LstDemos_DoubleClick(object sender, EventArgs e) {
+            prepareWorld(lstDemos.SelectedValue as string);
+        }
+
+        void prepareWorld(string id) {
             var world = new World();
 
-            switch(lstDemos.SelectedValue) {
+            switch(id) {
                 case "skull":
-                    world.Volumes.AddRange(VolumeFactory.ImportCollada(@"models\skull.dae"));
+                    world.Volumes.AddRange(VolumeFactory.NewImportCollada(@"models\skull.dae"));
+                    arcBallCam.Position += new Vector3(0, 0,  -5 - arcBallCam.Position.Z);
                     break;
 
                 case "teapot":
-                    world.Volumes.AddRange(VolumeFactory.ImportCollada(@"models\teapot.dae"));
+                    world.Volumes.AddRange(VolumeFactory.NewImportCollada(@"models\teapot.dae"));
                     break;
 
                 case "empty":

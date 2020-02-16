@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Numerics;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinForms3D {
